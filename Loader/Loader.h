@@ -38,7 +38,6 @@ THE POSSIBILITY OF SUCH DAMAGE.
 #define __NETTTUDE_LOADER_H__
 
 #include <Windows.h>
-#include <winternl.h>
 
 #if defined __cplusplus
 extern "C" {
