@@ -47,7 +47,6 @@ extern "C" {
     typedef LPVOID  ( WINAPI *LOADER_FNVIRTUALALLOC)(LPVOID, SIZE_T, DWORD, DWORD);     /* VirtuaAlloc */
     typedef BOOL    ( WINAPI *LOADER_FNVIRTUALFREE)(LPVOID, SIZE_T, DWORD);             /* VirtuaFree */
     typedef FARPROC ( WINAPI *LOADER_FNGETPROCADDRESS)(HMODULE, LPCSTR);                /* GetProcAddress */
-    typedef HMODULE ( WINAPI *LOADER_FNGETMODULEHANDLEA)(LPCSTR);                       /* GetModuleHandleA */
     typedef HMODULE ( WINAPI *LOADER_FNLOADLIBRARYA)(LPCSTR);                           /* LoadLibraryA*/
 
 #if defined(_WIN64)
@@ -61,7 +60,6 @@ extern "C" {
         LOADER_FNVIRTUALFREE        fnVirtualFree;
 
         LOADER_FNGETPROCADDRESS     fnGetProcAddress;
-        LOADER_FNGETMODULEHANDLEA   fnGetModuleHandleA;
         LOADER_FNLOADLIBRARYA       fnLoadLibraryA;
 
 #if defined(_WIN64)

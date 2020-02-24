@@ -42,7 +42,6 @@ int main(int argc, char** argv)
 
     LOADER_FUNCTION_TABLE funTab = { 0 };
 
-    funTab.fnGetModuleHandleA = &GetModuleHandleA;
     funTab.fnGetProcAddress = &GetProcAddress;
     funTab.fnLoadLibraryA = &LoadLibraryA;
     funTab.fnVirtualAlloc = &VirtualAlloc;

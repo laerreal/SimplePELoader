@@ -332,7 +332,6 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
 
 
     if (pFunTable &&
-        pFunTable->fnGetModuleHandleA &&
         pFunTable->fnGetProcAddress &&
         pFunTable->fnLoadLibraryA &&
         pFunTable->fnVirtualAlloc &&
