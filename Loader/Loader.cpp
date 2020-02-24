@@ -520,7 +520,9 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
 
                                             switch (pReloc[dwCount].Type)
                                             {
+#if defined(_WIN64)
                                             case IMAGE_REL_BASED_DIR64:
+#endif
                                             case IMAGE_REL_BASED_HIGHLOW:
                                                 *pVal += Difference;
                                                 break;
