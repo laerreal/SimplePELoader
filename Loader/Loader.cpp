@@ -469,7 +469,7 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
                                             else
                                             {
                                                 PIMAGE_IMPORT_BY_NAME pImport = (PIMAGE_IMPORT_BY_NAME)((UINT_PTR)LoadedImage.ImageBase + pThunk->u1.AddressOfData);
-                                                pAddrThunk->u1.Function = (UINT_PTR)pFunTable->fnGetProcAddress(hLib, pImport->Name);
+                                                pAddrThunk->u1.Function = (UINT_PTR)pFunTable->fnGetProcAddress(hLib, (LPCSTR)pImport->Name);
                                             }
 
                                             ++pThunk;
