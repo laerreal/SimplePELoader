@@ -433,7 +433,7 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
                             {
 
                                 //the final descriptor is a blank entry
-                                while (pDescriptor->Name != NULL &&
+                                while (pDescriptor->Name &&
                                     dwStatus == ERROR_SUCCESS)
                                 {
 
