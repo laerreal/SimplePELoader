@@ -35,6 +35,7 @@ TOMW Nettitude 2016
 */
 #include "Loader.h"
 #include <assert.h>
+#include <stdio.h>
 
 #if defined(_DEBUG)
 #define DEBUG_ASSERT(X) assert((X))
@@ -70,6 +71,7 @@ static DWORD GetDOSHeader(LPVOID pvData, DWORD cbSize, IMAGE_DOS_HEADER** pDOSHe
         }
         else
         {
+        	printf("%s:%d\n", __FILE__, __LINE__);
             dwStatus = ERROR_INVALID_DATA;
         }
     }
@@ -108,6 +110,7 @@ static DWORD GetNTHeaders(LPVOID pvData, DWORD cbSize, IMAGE_NT_HEADERS** pNTHea
             }
             else
             {
+            	printf("%s:%d\n", __FILE__, __LINE__);
                 dwStatus = ERROR_INVALID_DATA;
             }
         }
@@ -142,6 +145,8 @@ struct IMAGE_INFO
         DEBUG_ASSERT(cbSize);
 
         DWORD dwStatus = ERROR_INVALID_PARAMETER;
+
+        printf("pvData = 0x%08x\n", pvData);
 
         if (pvData)
         {
@@ -237,6 +242,7 @@ __inline T_Type GetImageDirectory(IMAGE_INFO& Image,
     DEBUG_ASSERT(Image.ImageBase);
     DEBUG_ASSERT(Image.ImageNTHeaders);
 
+    printf("Entry = %d\n", Entry);
     if (Image.ImageNTHeaders)
     {
         CONST IMAGE_DATA_DIRECTORY* pDir = &(Image.ImageNTHeaders->OptionalHeader.DataDirectory[Entry]);
@@ -244,17 +250,21 @@ __inline T_Type GetImageDirectory(IMAGE_INFO& Image,
 
         if (pDir)
         {
+        	printf("%s:%d\n", __FILE__, __LINE__);
             if (pOutDir)
             {
                 *pOutDir = pDir;
             }
 
+            printf("Image.Flags = %d\n", Image.Flags);
             if (Image.Flags & IMAGE_INFO::IMAGE_FLAG_FILE)
             {
+            	printf("%s:%d\n", __FILE__, __LINE__);
                 CONST IMAGE_SECTION_HEADER* pSection = ResolveVAToSection(Image, pDir->VirtualAddress);
 
                 if (pSection)
                 {
+                	printf("%s:%d\n", __FILE__, __LINE__);
                     //in a file we need to use the RVA
                     return reinterpret_cast<T_Type>((UINT_PTR)pSection->PointerToRawData + (UINT_PTR)Image.ImageBase);
                 }
@@ -262,12 +272,16 @@ __inline T_Type GetImageDirectory(IMAGE_INFO& Image,
             else if (pDir->Size &&
                 pDir->VirtualAddress)
             {
+            	printf("%s:%d\n", __FILE__, __LINE__);
                 //the actual VA will be ok
                 return reinterpret_cast<T_Type>((UINT_PTR)pDir->VirtualAddress + (UINT_PTR)Image.ImageBase);
             }
+            printf("pDir->Size = %d, pDir->VirtualAddress = %d\n", pDir->Size, pDir->VirtualAddress);
+            printf("%s:%d\n", __FILE__, __LINE__);
         }
     }
 
+    printf("%s:%d\n", __FILE__, __LINE__);
     return NULL;
 }
 
@@ -401,6 +415,8 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
                                     }
                                 }
 
+                                printf("0x%08x -> 0x%08x (%d)\n", pSrc, pDest, SectionSize);
+
                                 Loader_CopyMemory(pDest,
                                     pSrc,
                                     SectionSize);
@@ -409,11 +425,13 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
                         }
                         else
                         {
+                        	printf("%s:%d\n", __FILE__, __LINE__);
                             dwStatus = ERROR_INVALID_DATA;
                         }
                     }
                     else
                     {
+                    	printf("%s:%d\n", __FILE__, __LINE__);
                         dwStatus = ERROR_INVALID_DATA;
                     }
 
@@ -485,6 +503,7 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
                             }
                             else
                             {
+                            	printf("%s:%d\n", __FILE__, __LINE__);
                                 dwStatus = ERROR_INVALID_DATA;
                             }
                         }
@@ -541,6 +560,7 @@ extern "C" DWORD Loader_LoadFromBuffer(CONST LOADER_FUNCTION_TABLE* pFunTable,
                             }
                             else
                             {
+                            	printf("%s:%d\n", __FILE__, __LINE__);
                                 dwStatus = ERROR_INVALID_DATA;
                             }
                         }
